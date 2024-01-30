@@ -1,0 +1,27 @@
+<div class="container">
+  <span> Please select your climbing area of choice </span>
+  <div style="height:10px;"></div>
+  <div class="row">
+      <div *ngFor= "let area of area_list |async">
+        <div class="card text-white mb-3" style = "width: 80rem; margin: auto; background-color: darkgray;"
+        [routerLink]= "['/rockroutes', area._id]">
+
+          <div class="card-header">
+            {{ area.Area }}
+          </div>
+          </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-3">
+      <button class="btn btn-dark" (click)="previousPage()">Previous</button>
+    </div>
+    <div class="col-sm-3 ">
+      <button class="btn btn-dark" (click)="nextPage()">Next</button>
+    </div>
+  </div>
+
+  <br />
+
+</div>

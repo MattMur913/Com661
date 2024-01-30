@@ -1,0 +1,25 @@
+<div class="container">
+  <h2 *ngFor= "let sections of area_list |async"> {{ sections.Area  }} </h2>
+  <br />
+  <div class="row">
+    <div class="col-sm-12">
+      <div *ngFor= "let area of route_list |async">
+        <div class="card text-white mb-3" style = "width: 80rem; margin: auto;background-color: darkgray;"
+        [routerLink]= "['/rockroute', area._id]">
+
+        <div class="card-header">
+          {{ area.Route }}
+        </div>
+        <div class="card-body">
+          <p>Type: {{area.RouteType}}</p>
+          <p *ngIf="area.Length !== ''">Climb Length: {{ area.Length }}</p>
+          <p>Grade: {{ area.Grade }} </p>
+          <p *ngIf="area.Pitches !== ''">Pitches: {{area.Pitches}}</p>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

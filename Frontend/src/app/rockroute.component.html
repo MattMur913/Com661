@@ -1,0 +1,105 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div *ngFor= "let area of routes_list |async">
+        <div class="card text-black mb-8" style = "width: 80rem; margin: auto;background-color: lightgray;">
+          <div class="card-header" style="background-color: darkgray; color:white;">
+            <h2>{{ area.Route }}</h2>
+          </div>
+          <div class="card-body">
+            <p>Type: {{area.RouteType}}</p>
+            <p *ngIf="area.Length !== ''">Climb Length: {{ area.Length }}</p>
+            <p>Grade: {{ area.Grade }} </p>
+            <p *ngIf="area.Pitches !== ''">Pitches: {{area.Pitches}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row"><br />
+  <div style="min-height: 50px;"></div>
+  <ng-container *ngIf = "authService.isAuthenticated$ | async;">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-3">
+      <button class="btn btn-warning" (click)="deleteClimb()">Delete</button>
+    </div>
+    <div class="col-sm-3 text-end">
+      <button class="btn btn-success" [routerLink]= "['/updateroute', routeID]">Update</button>
+    </div>
+  </ng-container>
+</div>
+
+
+
+<br />
+<ng-container *ngIf = "authService.isAuthenticated$ | async; else loggedOut">
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Add comment</h2>
+      <form [formGroup] = "commentForm" (ngSubmit)= "onSubmit()">
+        <div class="form-group">
+          <label for="username">Name</label>
+          <input type="text" id="username" name="username" class="form-control" formControlName="username" >
+        </div>
+        <div class="form-group">
+          <label for="comment">Please leave your comment below </label>
+          <textarea id="comment" rows="3" name="review" class="form-control" formControlName="comment"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="rating">Please provide the number of screaming Ondra's you would give the route</label>
+          <select id="rating" name="rating" class="form-control" formControlName="rating">
+            <option value="1">1 </option>
+            <option value="2">2 </option>
+            <option value="3">3 </option>
+            <option value="4">4 </option>
+            <option value="5+">5 </option>
+          </select>
+        </div>
+        <button  type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+ </div>
+ <div style="min-height: 50px;"></div>
+<div class="container" >
+
+  <div class="row" >
+    <div class="col-sm-12">
+      <div *ngFor= "let comment of comment_list | async">
+        <div class="card text-white mb-3" style = "width: 70rem; margin: auto;background-color: darkgray;">
+          <div class="card-header">
+            {{ comment.username }}
+          </div>
+          <div class="card-body">
+            {{ comment.comment }}
+            <p>
+            {{ comment.rating }} ratings
+            </p>
+          </div>
+          <div class="card-footer">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+              <button class="btn btn-warning" (click)="deleteComment(comment.id)">Delete</button>
+            </div>
+          </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</ng-container>
+
+
+<ng-template #loggedOut>
+  <div class="card mb-3" style = "width: 70rem; margin: auto;">
+    <div class="card-header">
+      <h2>Only logged in members can access comments</h2>
+    </div>
+  </div>
+</ng-template>
